@@ -12,28 +12,43 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
       const root = document.getElementById("root");
-      function App() {
-        const [minutes, setMinutes] = React.useState(0);
-        const [hours, setHours] = React.useState(0);
+
+      // miniutes and hours
+      function M2H() {
+        const [minutes, setMinutes] = React.useState("");
+        const [hours, setHours] = React.useState("");
+        const [flipped, setFlipped] = React.useState(false);
         const onChange = (event) => {
-          if (event.target.id === "minutes") {
-            setMinutes(event.target.value);
-            setHours(event.target.value / 60);
-          } else if (event.target.id === "hours") {
-            setHours(event.target.value);
-            setMinutes(event.target.value * 60);
+          if (event.target) {
+            const value = event.target.value;
+            if (event.target.id === "minutes") {
+              setMinutes(value);
+              setHours((value / 60).toFixed(2));
+            } else if (event.target.id === "hours") {
+              setHours(value);
+              setMinutes(value * 60);
+            }
           }
+        };
+        const reset = () => {
+          setMinutes(0);
+          setHours(0);
+        };
+        const flip = () => {
+          reset();
+          setFlipped((current) => !current);
         };
 
         return (
           <div>
-            <h3>Super Converter</h3>
+            <h3>Minutes and Hours</h3>
             <label htmlFor="minutes">Minutes</label>
             <input
               value={minutes}
               id="minutes"
               type="number"
               placeholder="Minutes"
+              disabled={flipped}
               onChange={onChange}
             />
             <br />
@@ -44,7 +59,89 @@
               type="number"
               placeholder="Hours"
               onChange={onChange}
+              disabled={!flipped}
             />
+            <br />
+            <input type="button" value="RESET" onClick={reset} />
+            <input type="button" value="FLIP" onClick={flip} />
+          </div>
+        );
+      }
+
+      // killometer and miles
+      function K2M() {
+        const unitOfMiles = 1.609344;
+        const [km, setKm] = React.useState("");
+        const [miles, setMiles] = React.useState("");
+        const [flipped, setFlipped] = React.useState(false);
+        const onChange = (event) => {
+          if (event.target) {
+            const value = event.target.value;
+            if (event.target.id === "km") {
+              setKm(value);
+              setMiles((value / unitOfMiles).toFixed(2));
+            } else if (event.target.id === "miles") {
+              setMiles(value);
+              setKm(value * unitOfMiles.toFixed(2));
+            }
+          }
+        };
+        const reset = () => {
+          setKm(0);
+          setMiles(0);
+        };
+        const flip = () => {
+          reset();
+          setFlipped((current) => !current);
+        };
+
+        return (
+          <div>
+            <h3>Km and Miles</h3>
+            <label htmlFor="km">Km</label>
+            <input
+              value={km}
+              id="km"
+              type="number"
+              placeholder="Km"
+              disabled={flipped}
+              onChange={onChange}
+            />
+            <br />
+            <label htmlFor="miles">Miles</label>
+            <input
+              value={miles}
+              id="miles"
+              type="number"
+              placeholder="Miles"
+              onChange={onChange}
+              disabled={!flipped}
+            />
+            <br />
+            <input type="button" value="RESET" onClick={reset} />
+            <input type="button" value="FLIP" onClick={flip} />
+          </div>
+        );
+      }
+
+      function App() {
+        const [index, setIndex] = React.useState("xx");
+        const onSelect = (e) => {
+          setIndex(e.target.value);
+        };
+
+        return (
+          <div>
+            <h1>Super Converter</h1>
+            <select value={index} onChange={onSelect}>
+              <option value="xx">Please Select</option>
+              <option value="0">Hours and Minutes</option>
+              <option value="1">Km and Miles</option>
+            </select>
+            <div>
+              {index === "0" ? <M2H /> : null}
+              {index === "1" ? <K2M /> : null}
+            </div>
           </div>
         );
       }
