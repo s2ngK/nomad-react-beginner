@@ -1,0 +1,36 @@
+<html>
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const root = document.getElementById("root");
+      function App() {
+        // counter: 상태 관리되는 변수
+        // setCounter: 상태 변환 함수
+        // useState(x): 값(x) 초기화
+        const [counter, setCounter] = React.useState(0);
+        // 클릭에서 사용될 핸들러 함수
+        const onClick = () => {
+          // counter 값을 변경하기위해서 실제 콜되는 함수를 선언하고 그 안에서 setCounter를 호출
+          // 현 상태 값을 기준으로 값 변경
+          setCounter((current) => current + 1);
+        };
+        return (
+          <div>
+            <h3>Total click: {counter}</h3>
+            <button onClick={onClick}>Click me</button>
+          </div>
+        );
+      }
+      ReactDOM.render(<App />, root);
+    </script>
+  </body>
+</html>
