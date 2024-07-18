@@ -1,5 +1,13 @@
+import Button from "./Button";
+import styles from "./App.module.css";
+
 function App() {
-  return <div>Hello Noard React Study</div>;
+  return (
+    <div>
+      <h1 className={styles.title}>Hello Noard React Study</h1>
+      <Button text={"continue"} />
+    </div>
+  );
 }
 
 export default App;
